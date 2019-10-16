@@ -7,12 +7,38 @@ $action = $_GET['action'];
 if($action=="read")
 {
 	$nim = $_GET['nim'];
-	if($_GET['nim'])
+	if($nim)
 	{
-		$getUsers = $conn->prepare("select *from mahasiswa where nim = :nim");
-		$getUsers->execute(array('nim'=>$_GET['nim']));
-		$users = $getUsers->fetch(PDO::FETCH_OBJ);
-		$result['status'] = true;
+		if($_GET['search'])
+		{
+			$getUsers = $conn->prepare("select *from mahasiswa where nim like :nim");
+			$getUsers->bindValue(':nim', '%'.$nim.'%');
+			$getUsers->execute();
+
+			$users = $getUsers->fetch(PDO::FETCH_OBJ);
+			if($users->nim != "")
+			{
+				$result['status'] = true;
+				$result['message'] = "Data berhasil ditemukan";
+				$result['mahasiswa'] = $users;
+			}
+
+			else
+			{
+				$result['status'] = false;
+				$result['message'] = "Data gagal ditemukan";
+			}
+		}
+
+		else
+		{
+			$getUsers = $conn->prepare("select *from mahasiswa where nim = :nim");
+			$getUsers->execute(array('nim'=>$nim));
+			$users = $getUsers->fetch(PDO::FETCH_OBJ);
+			$result['status'] = true;
+			$result['message'] = "Data berhasil ditemukan";
+			$result['mahasiswa'] = $users;
+		}
 	}
 
 	else
@@ -24,10 +50,10 @@ if($action=="read")
 		{
 			array_push($users, $user);
 		}
+		$result['message'] = "Data berhasil dilihat";
 		$result['status'] = true;
+		$result['mahasiswa'] = $users;
 	}
-	$result['mesage'] = "Data berhasil dilihat";
-	$result['mahasiswa'] = $users;
 }
 
 else if($action=="create")
