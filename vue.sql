@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2019 at 06:33 PM
+-- Generation Time: Oct 17, 2019 at 10:53 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -33,6 +33,17 @@ CREATE TABLE `mahasiswa` (
   `nama` varchar(99) NOT NULL,
   `jurusan` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`nim`, `nama`, `jurusan`) VALUES
+(1, 'Aku', 'Informatika'),
+(2, 'Kamu', 'Kedokteran'),
+(3, 'Dia', 'Pertanian'),
+(4, 'Mereka', 'Kimia'),
+(5, 'Anu', 'Manajemen');
 
 --
 -- Indexes for dumped tables
